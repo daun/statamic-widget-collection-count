@@ -1,0 +1,25 @@
+{
+    "name": "daun/statamic-widget-collection-count",
+    "license": "MIT",
+    "type": "statamic-addon",
+    "description": "Display the number of entries per collection in your Statamic control panel",
+    "autoload": {
+      "psr-4": {
+        "Daun\\CollectionCount\\": "src"
+      }
+    },
+    "extra": {
+      "statamic": {
+        "name": "Statamic Widget: Collection Count",
+        "description": "Display the number of entries per collection in your control panel"
+      },
+      "laravel": {
+        "providers": [
+          "Daun\\CollectionCount\\ServiceProvider"
+        ]
+      }
+    },
+    "require": {
+      "statamic/cms": "^3.3|^4.0"
+    }
+  }
