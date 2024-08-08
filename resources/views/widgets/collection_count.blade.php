@@ -6,7 +6,7 @@
         @endforeach
     </div>
 
-@elseif ($collections->count() === 1)
+@if ($collections->count() === 1)
 
     @php
         $collection = $collections->first();
