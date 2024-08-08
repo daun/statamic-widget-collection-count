@@ -2,6 +2,7 @@
 
 namespace Daun\CollectionCount\Widgets;
 
+use Illuminate\Support\Collection as LaravelCollection;
 use Statamic\Facades\Collection;
 use Statamic\Facades\User;
 use Statamic\Widgets\Widget;
@@ -15,38 +16,46 @@ class CollectionCount extends Widget
      */
     public function html()
     {
-        $collections = $this->config('collections', $this->config('collection', []));
-        if ($collections === '*') {
-            $collections = Collection::handles();
-        }
-        if (is_string($collections)) {
-            $collections = collect(explode('|', $collections));
-        }
-        $collections = collect($collections);
-        if (!$collections->count()) {
-            return view('daun::widgets.collection_count', [
-                'errors' => collect('Error: No collections specified')
-            ]);
-        }
-
-        $errors = $collections
-            ->filter(fn($handle) => !Collection::handleExists($handle))
-            ->map(fn($handle) => "Error: Collection [$handle] doesn't exist.");
-
-        if ($errors->count()) {
-            return view('daun::widgets.collection_count', [
-                'errors' => $errors
-            ]);
-        }
-
-        $collections = $collections->map(fn($handle) => $this->augmentCollection($handle));
+        $collections = $this->getCollectionsFromConfig();
+        [$collections, $errors] = $this->augmentCollections($collections);
 
         return view('daun::widgets.collection_count', [
-            'collections' => $collections
+            'collections' => $collections,
+            'errors' => $errors
         ]);
     }
 
-    protected function augmentCollection($handle)
+    protected function getCollectionsFromConfig(): LaravelCollection
+    {
+        $collections = $this->config('collections', $this->config('collection', []));
+
+        if ($collections === '*') {
+            $collections = Collection::handles();
+        }
+
+        if (is_string($collections)) {
+            $collections = collect(explode('|', $collections));
+        }
+
+        return collect($collections);
+    }
+
+    protected function augmentCollections(LaravelCollection $collections): array
+    {
+        $errors = $collections->count()
+            ? $collections
+                ->filter(fn($handle) => !Collection::handleExists($handle))
+                ->map(fn($handle) => "Error: Collection [$handle] doesn't exist.")
+            : collect('Error: No collections specified');
+
+        $augmented = $collections
+            ->filter(fn($handle) => Collection::handleExists($handle))
+            ->map(fn($handle) => $this->augmentCollection($handle));
+
+        return [$augmented, $errors];
+    }
+
+    protected function augmentCollection(mixed $handle): ?object
     {
         $collection = Collection::findByHandle($handle);
         if (!$collection) {
