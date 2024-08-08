@@ -4,7 +4,7 @@
 
 - Support custom query scopes
 - Add option to count published entries only
-- Removed undocumented param mutations
+- Remove undocumented param mutations
 
 ## [1.1.1] - 2024-07-11
 
