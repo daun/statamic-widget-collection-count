@@ -68,7 +68,7 @@ return [
 
 ## Requirements
 
-Statamic 3 or 4
+Statamic 3/4/5+
 
 ## License
 
