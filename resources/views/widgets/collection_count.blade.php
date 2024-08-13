@@ -6,6 +6,8 @@
         @endforeach
     </div>
 
+@endif
+
 @if ($collections->count() === 1)
 
     @php
