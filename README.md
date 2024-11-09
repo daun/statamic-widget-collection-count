@@ -66,6 +66,22 @@ return [
 ];
 ```
 
+### Usage with taxonomies
+
+The widget will happily count taxonomy terms as well. Make sure to prepend the handle with
+`taxonomy::` so it knows where to go looking for terms.
+
+```php
+return [
+    'widgets' => [
+        [
+            'type' => 'collection_count',
+            'collection' => 'taxonomy::categories',
+        ]
+    ]
+];
+```
+
 ## Requirements
 
 Statamic 3/4/5+
