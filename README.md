@@ -68,14 +68,14 @@ return [
 
 ### Usage with taxonomies
 
-The widget will happily count taxonomy terms as well. Make sure to use the `taxonomy` option instead:
+The widget will happily count taxonomy terms as well. Just use the taxonomy name instead.
 
 ```php
 return [
     'widgets' => [
         [
             'type' => 'collection_count',
-            'taxonomy' => 'categories',
+            'collection' => 'tags',
         ]
     ]
 ];

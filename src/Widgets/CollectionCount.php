@@ -37,37 +37,36 @@ class CollectionCount extends Widget
     {
         $errors = $collections->filter()->count()
             ? $collections
-                ->filter(fn($handle) => ! $this->collectionExists($handle))
+                ->filter(fn($handle) => ! $this->collectionOrTaxonomyExists($handle))
                 ->map(fn($handle) => "Error: Collection [$handle] doesn't exist.")
             : collect('Error: No collections specified');
 
         $result = $collections
-            ->map(fn($handle) => $this->findCollection($handle))
+            ->map(fn($handle) => $this->findCollectionOrTaxonomy($handle))
             ->filter()
-            ->map(fn($collection) => $this->queryCollection($collection));
+            ->map(fn($collection) => $this->queryCollectionOrTaxonomy($collection));
 
         return [$result, $errors];
     }
 
-    protected function findCollection(string $handle): Collection|Taxonomy|null
+    protected function findCollectionOrTaxonomy(string $handle): Collection|Taxonomy|null
     {
         if (Str::contains($handle, '::')) {
             [$type, $handle] = explode('::', $handle, 2);
         }
 
         return match ($type ?? 'collection') {
-            'collection' => Collections::findByHandle($handle),
             'taxonomy' => Taxonomies::findByHandle($handle),
-            default => null
+            default => Collections::findByHandle($handle) ?? Taxonomies::findByHandle($handle),
         };
     }
 
-    protected function collectionExists(string $handle): bool
+    protected function collectionOrTaxonomyExists(string $handle): bool
     {
-        return (bool) $this->findCollection($handle);
+        return (bool) $this->findCollectionOrTaxonomy($handle);
     }
 
-    protected function queryCollection(Collection|Taxonomy $collection): ?object
+    protected function queryCollectionOrTaxonomy(Collection|Taxonomy $collection): ?object
     {
         $query = $collection instanceof Taxonomy
             ? $collection->queryTerms()
