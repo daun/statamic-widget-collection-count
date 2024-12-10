@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.1] - 2024-12-10
+
+- Support eloquent driver
+
 ## [1.3.0] - 2024-12-06
 
 - Support counting taxonomy terms
@@ -26,6 +30,7 @@
 
 - Initial release
 
+[1.3.1]: https://github.com/daun/statamic-widget-collection-count/releases/tag/v1.3.1
 [1.3.0]: https://github.com/daun/statamic-widget-collection-count/releases/tag/v1.3.0
 [1.2.1]: https://github.com/daun/statamic-widget-collection-count/releases/tag/v1.2.1
 [1.2.0]: https://github.com/daun/statamic-widget-collection-count/releases/tag/v1.2.0
