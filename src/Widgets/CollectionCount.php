@@ -10,7 +10,7 @@ use Statamic\Facades\Collection as Collections;
 use Statamic\Facades\Scope;
 use Statamic\Facades\Taxonomy as Taxonomies;
 use Statamic\Facades\User;
-use Statamic\Stache\Query\Builder;
+use Statamic\Contracts\Query\Builder;
 use Statamic\Taxonomies\Taxonomy;
 use Statamic\Widgets\Widget;
 
