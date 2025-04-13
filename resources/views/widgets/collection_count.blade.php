@@ -1,3 +1,5 @@
+@php use function Statamic\trans as __; @endphp
+
 @if ($errors->count())
 
     <div class="card p-4 text-sm text-red-500 overflow-hidden h-full group">

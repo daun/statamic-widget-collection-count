@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.2] - 2025-04-13
+
+- Use internal translation helper
+
 ## [1.3.1] - 2024-12-10
 
 - Support eloquent driver
@@ -30,6 +34,7 @@
 
 - Initial release
 
+[1.3.2]: https://github.com/daun/statamic-widget-collection-count/releases/tag/v1.3.2
 [1.3.1]: https://github.com/daun/statamic-widget-collection-count/releases/tag/v1.3.1
 [1.3.0]: https://github.com/daun/statamic-widget-collection-count/releases/tag/v1.3.0
 [1.2.1]: https://github.com/daun/statamic-widget-collection-count/releases/tag/v1.2.1
