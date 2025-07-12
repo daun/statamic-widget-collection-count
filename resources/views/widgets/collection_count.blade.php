@@ -26,7 +26,7 @@
                     <span class="opacity-0 group-hover:opacity-100">→</span>
                 </p>
             </div>
-            <div class="p-4 pb-2 pt-0 text-4xl">
+            <div class="p-4 pb-2 pt-0 text-4xl lining-nums">
                 <p>
                     <span>{{ $collection->count }}</span>
                 </p>
@@ -50,7 +50,7 @@
                             <span class="opacity-0 group-hover:opacity-100">→</span>
                         </p>
                     </div>
-                    <div class="px-4 text-4xl">
+                    <div class="px-4 text-4xl lining-nums">
                         <p>
                             <span>{{ $collection->count }}</span>
                         </p>
