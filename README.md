@@ -83,7 +83,7 @@ return [
 
 ## Requirements
 
-Statamic 3/4/5+
+Statamic 6 or higher. For Statamic 5 support, please use version 1.x of this addon.
 
 ## License
 
