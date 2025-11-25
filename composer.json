@@ -1,30 +1,31 @@
 {
     "name": "daun/statamic-widget-collection-count",
+    "description": "Display the number of entries per collection or taxonomy in your Statamic control panel",
     "license": "MIT",
     "type": "statamic-addon",
-    "description": "Display the number of entries per collection or taxonomy in your Statamic control panel",
-    "autoload": {
-      "psr-4": {
-        "Daun\\CollectionCount\\": "src"
-      }
-    },
-    "extra": {
-      "statamic": {
-        "name": "Statamic Widget: Collection Count",
-        "description": "Display the number of entries per collection or taxonomy in your control panel"
-      },
-      "laravel": {
-        "providers": [
-          "Daun\\CollectionCount\\ServiceProvider"
-        ]
-      }
-    },
     "require": {
         "statamic/cms": "^6.0"
+    },
+    "minimum-stability": "alpha",
+    "autoload": {
+        "psr-4": {
+            "Daun\\CollectionCount\\": "src"
+        }
     },
     "config": {
         "allow-plugins": {
             "pixelfear/composer-dist-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Daun\\CollectionCount\\ServiceProvider"
+            ]
+        },
+        "statamic": {
+            "description": "Control panel widget showing a count of entries for a given collection or taxonomy",
+            "name": "Collection Count Widget"
         }
     }
 }
