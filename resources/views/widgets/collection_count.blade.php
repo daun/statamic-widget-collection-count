@@ -8,7 +8,7 @@
 
     <div class="@container flex flex-wrap gap-x-6 gap-y-4">
         @foreach ($collections as $collection)
-            <div class="group relative hover:text-(--color-ui-accent-text)">
+            <div class="group relative hover:opacity-60">
                 <p class="truncate flex gap-1 items-baseline">
                     <span>{{ __($collection->title) }}</span>
                     @if ($collection->url)
