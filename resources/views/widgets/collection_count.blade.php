@@ -6,16 +6,20 @@
 
 @if ($collections->count())
 
-    <div class="@container grid grid-cols-[repeat(auto-fill,minmax(125px,1fr))] gap-x-6 gap-y-4">
+    @php
+        $maxCount = $collections->max(fn($collection) => strlen("{$collection->count}"));
+    @endphp
+
+    <div class="@container grid grid-cols-[repeat(auto-fill,minmax(var(--collection-count-col,1.5em),1fr))] gap-x-6 gap-y-4 text-6xl" data-max-count="{{ $maxCount }}">
         @foreach ($collections as $collection)
             <div class="group relative hover:opacity-60">
-                <p class="truncate flex gap-1 items-baseline">
+                <p class="text-base truncate flex gap-1.5 items-baseline">
                     <span>{{ __($collection->title) }}</span>
                     @if ($collection->url)
                         <span class="opacity-0 group-hover:opacity-100">→</span>
                     @endif
                 </p>
-                <div class="text-6xl lining-nums">
+                <div class="lining-nums -mx-0.5">
                     <p>
                         <span>{{ $collection->count }}</span>
                     </p>
