@@ -10,16 +10,16 @@
         $maxCount = $collections->max(fn($collection) => strlen("{$collection->count}"));
     @endphp
 
-    <div class="@container grid grid-cols-[repeat(auto-fill,minmax(var(--collection-count-col,1.5em),1fr))] gap-x-6 gap-y-4 text-6xl" data-max-count="{{ $maxCount }}">
+    <div class="@container grid grid-cols-[repeat(auto-fill,minmax(var(--collection-count-col,1.5em),1fr))] gap-x-6 gap-y-4 pb-3 text-5xl" data-max-count="{{ $maxCount }}">
         @foreach ($collections as $collection)
-            <div class="group relative hover:opacity-60">
-                <p class="text-base truncate flex gap-1.5 items-baseline">
+            <div class="group relative hover:opacity-70">
+                <p class="text-base truncate flex gap-2 items-baseline">
                     <span>{{ __($collection->title) }}</span>
                     @if ($collection->url)
                         <span class="opacity-0 group-hover:opacity-100">→</span>
                     @endif
                 </p>
-                <div class="lining-nums -mx-0.5">
+                <div class="mt-1! -ml-0.5! lining-nums font-medium">
                     <p>
                         <span>{{ $collection->count }}</span>
                     </p>

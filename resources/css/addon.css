@@ -3,7 +3,9 @@
 @source '../**/*.vue';
 @source '../**/*.blade.php';
 
---collection-count-col: 1.5em;
+:root {
+  --collection-count-col: 1.5em;
+}
 
 [data-max-count='1'] {
   --collection-count-col: 1.5em;
