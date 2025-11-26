@@ -24,7 +24,7 @@ class CollectionCount extends Widget
     public function html()
     {
         [$collections, $errors] = $this->getCollections(
-            collect(Arr::wrap($this->config('collection')))
+            collect(Arr::wrap($this->config('collections', $this->config('collection', []))))
         );
 
         return view('daun::widgets.collection_count', [
@@ -38,8 +38,8 @@ class CollectionCount extends Widget
         $errors = $collections->filter()->count()
             ? $collections
                 ->filter(fn($handle) => ! $this->collectionOrTaxonomyExists($handle))
-                ->map(fn($handle) => "Error: Collection [$handle] doesn't exist.")
-            : collect('Error: No collections specified');
+                ->map(fn($handle) => "Collection [$handle] doesn't exist.")
+            : collect('No collections specified');
 
         $result = $collections
             ->map(fn($handle) => $this->findCollectionOrTaxonomy($handle))
@@ -99,7 +99,7 @@ class CollectionCount extends Widget
 
     protected function getViewUrl(Collection|Taxonomy $collection)
     {
-        return User::current()->can('view', $collection->handle())
+        return User::current()->can('view', $collection)
             ? $collection->showUrl()
             : null;
     }
