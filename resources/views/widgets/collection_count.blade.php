@@ -6,7 +6,7 @@
 
 @if ($collections->count())
 
-    <div class="@container flex flex-wrap gap-x-6 gap-y-4">
+    <div class="@container grid grid-cols-[repeat(auto-fill,minmax(125px,1fr))] gap-x-6 gap-y-4">
         @foreach ($collections as $collection)
             <div class="group relative hover:opacity-60">
                 <p class="truncate flex gap-1 items-baseline">
