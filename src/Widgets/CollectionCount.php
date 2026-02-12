@@ -29,7 +29,9 @@ class CollectionCount extends Widget
 
         return view('daun::widgets.collection_count', [
             'collections' => $collections,
-            'errors' => $errors
+            'errors' => $errors,
+            'grid' => ! $this->config('width') || $collections->count() > 1,
+            'card' => $this->config('card', true),
         ]);
     }
 
