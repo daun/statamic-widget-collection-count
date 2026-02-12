@@ -6,7 +6,6 @@
     "require": {
         "statamic/cms": "^6.0"
     },
-    "minimum-stability": "alpha",
     "autoload": {
         "psr-4": {
             "Daun\\CollectionCount\\": "src"
