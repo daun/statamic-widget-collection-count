@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.0.0] - 2025-02-12
+
+- Add support for Statamic 6
+- Display counts without cards by default
+- Add option to display counts as individual cards
+- Hide collections the user cannot view
+- Improve focus styles
+- Drop support for Statamic 3, 4 and 5 (breaking change)
+
 ## [1.3.3] - 2025-07-12
 
 - Use lining numbers for display
@@ -38,6 +47,7 @@
 
 - Initial release
 
+[2.0.0]: https://github.com/daun/statamic-widget-collection-count/releases/tag/v2.0.0
 [1.3.3]: https://github.com/daun/statamic-widget-collection-count/releases/tag/v1.3.3
 [1.3.2]: https://github.com/daun/statamic-widget-collection-count/releases/tag/v1.3.2
 [1.3.1]: https://github.com/daun/statamic-widget-collection-count/releases/tag/v1.3.1
