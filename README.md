@@ -1,7 +1,7 @@
 # Statamic Widget: Collection Count
 
 Control panel widget for [Statamic](https://statamic.com/) that displays the
-count of entries for a given collection or taxonomy.
+count of collection entries or taxonomy terms.
 
 ![Collection Count Widget Screenshot](./art/collection-count-widget.png)
 
@@ -18,14 +18,14 @@ Alternatively, you can install the addon via the control panel.
 ## Usage
 
 Add the widget to your control panel dashboard by adding it to the `widgets` array in the
-`config/statamic/cp.php` config file. Pass in the name of the collection to show.
+`config/statamic/cp.php` config file. Pass in the names of collections to show.
 
 ```php
 return [
     'widgets' => [
         [
             'type' => 'collection_count',
-            'collection' => 'projects'
+            'collections' => ['articles', 'categories', 'authors'],
         ]
     ]
 ];
@@ -54,13 +54,13 @@ return [
 
 Pass in the `query_scope` param to apply [custom scopes](https://statamic.dev/extending/query-scopes-and-filters) before counting.
 
-```php
+```diff
 return [
     'widgets' => [
         [
             'type' => 'collection_count',
-            'collection' => 'projects',
-            'query_scope' => 'archived',
+            'collections' => ['articles', 'categories', 'authors'],
++           'query_scope' => 'unarchived',
         ]
     ]
 ];
@@ -68,14 +68,14 @@ return [
 
 ### Usage with taxonomies
 
-The widget will happily count taxonomy terms as well. Just use the taxonomy name instead.
+The widget can count taxonomy terms as well. Just use the taxonomy name instead.
 
 ```php
 return [
     'widgets' => [
         [
             'type' => 'collection_count',
-            'collection' => 'tags',
+            'collections' => ['tags'],
         ]
     ]
 ];
