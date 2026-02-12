@@ -37,7 +37,7 @@ class CollectionCount extends Widget
     {
         // If the config value is an integer, return that many dummy collections with random data
         if (is_int($count = $this->config('collections'))) {
-            return [collect()->times($count, fn() => $this->dummyCollection()), collect()];
+            return [$this->dummyCollections($count), collect()];
         }
 
         $collections = collect(Arr::wrap($this->config('collections', $this->config('collection', []))));
@@ -94,14 +94,18 @@ class CollectionCount extends Widget
         ];
     }
 
-    protected function dummyCollection(): ?object
+    protected function dummyCollections(int $count): ?object
     {
-        return (object) [
-            'title' => $title = Arr::random(['Articles', 'Blog Posts', 'Events', 'Products', 'Projects', 'Recipes', 'Reviews', 'Tutorials']),
-            'handle' => Str::slug($title),
-            'url' => '/',
-            'count' => (int) collect()->times(rand(1, 4))->map(fn() => random_int(1, 9))->join(''),
-        ];
+        $collections = ['Articles' => 596, 'Categories' => 117, 'Authors' => 32, 'Comments' => 874];
+
+        return collect($collections)
+            ->take($count)
+            ->map(fn($count, $title) => (object) [
+                'title' => $title,
+                'handle' => Str::slug($title),
+                'url' => '/',
+                'count' => $count,
+            ]);
     }
 
     protected function applyQueryScopes(Builder $query)
