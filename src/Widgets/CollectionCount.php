@@ -23,20 +23,25 @@ class CollectionCount extends Widget
      */
     public function html()
     {
-        [$collections, $errors] = $this->getCollections(
-            collect(Arr::wrap($this->config('collections', $this->config('collection', []))))
-        );
+        [$collections, $errors] = $this->getCollections();
 
         return view('daun::widgets.collection_count_widget', [
             'collections' => $collections,
             'errors' => $errors,
-            'grid' => ! $this->config('width') || $collections->count() > 1,
+            'grid' => ! $this->config('width'),
             'card' => $this->config('card', true),
         ]);
     }
 
-    protected function getCollections(IlluminateCollection $collections): array
+    protected function getCollections(): array
     {
+        // If the config value is an integer, return that many dummy collections with random data
+        if (is_int($count = $this->config('collections'))) {
+            return [collect()->times($count, fn() => $this->dummyCollection()), collect()];
+        }
+
+        $collections = collect(Arr::wrap($this->config('collections', $this->config('collection', []))));
+
         $errors = $collections->filter()->count()
             ? $collections
                 ->filter(fn($handle) => ! $this->collectionOrTaxonomyExists($handle))
@@ -81,6 +86,16 @@ class CollectionCount extends Widget
             'handle' => $collection->handle(),
             'url' => $url,
             'count' => $count
+        ];
+    }
+
+    protected function dummyCollection(): ?object
+    {
+        return (object) [
+            'title' => $title = Arr::random(['Articles', 'Blog Posts', 'Events', 'Products', 'Projects', 'Recipes', 'Reviews', 'Tutorials']),
+            'handle' => Str::slug($title),
+            'url' => '/',
+            'count' => (int) collect()->times(rand(1, 4))->map(fn() => random_int(1, 9))->join(''),
         ];
     }
 
