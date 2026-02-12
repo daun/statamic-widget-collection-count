@@ -23,27 +23,34 @@ class CollectionCount extends Widget
      */
     public function html()
     {
-        [$collections, $errors] = $this->getCollections(
-            collect(Arr::wrap($this->config('collection')))
-        );
+        [$collections, $errors] = $this->getCollections();
 
-        return view('daun::widgets.collection_count', [
+        return view('daun::widgets.collection_count_widget', [
             'collections' => $collections,
-            'errors' => $errors
+            'errors' => $errors,
+            'grid' => ! $this->config('width'),
+            'cards' => $this->config('cards', false),
         ]);
     }
 
-    protected function getCollections(IlluminateCollection $collections): array
+    protected function getCollections(): array
     {
+        // If the config value is an integer, return that many dummy collections with random data
+        if (is_int($count = $this->config('collections'))) {
+            return [$this->dummyCollections($count), collect()];
+        }
+
+        $collections = collect(Arr::wrap($this->config('collections', $this->config('collection', []))));
+
         $errors = $collections->filter()->count()
             ? $collections
                 ->filter(fn($handle) => ! $this->collectionOrTaxonomyExists($handle))
-                ->map(fn($handle) => "Error: Collection [$handle] doesn't exist.")
-            : collect('Error: No collections specified');
+                ->map(fn($handle) => "Collection [$handle] doesn't exist.")
+            : collect('No collections specified');
 
         $result = $collections
             ->map(fn($handle) => $this->findCollectionOrTaxonomy($handle))
-            ->filter()
+            ->filter(fn($collection) => $collection && $this->collectionOrTaxonomyShouldBeVisible($collection))
             ->map(fn($collection) => $this->queryCollectionOrTaxonomy($collection));
 
         return [$result, $errors];
@@ -66,6 +73,11 @@ class CollectionCount extends Widget
         return (bool) $this->findCollectionOrTaxonomy($handle);
     }
 
+    protected function collectionOrTaxonomyShouldBeVisible(Collection|Taxonomy $collection): bool
+    {
+        return User::current()->can('view', $collection);
+    }
+
     protected function queryCollectionOrTaxonomy(Collection|Taxonomy $collection): ?object
     {
         $query = $collection instanceof Taxonomy
@@ -82,10 +94,24 @@ class CollectionCount extends Widget
         ];
     }
 
+    protected function dummyCollections(int $count): ?object
+    {
+        $collections = ['Articles' => 596, 'Categories' => 117, 'Authors' => 32, 'Comments' => 874];
+
+        return collect($collections)
+            ->take($count)
+            ->map(fn($count, $title) => (object) [
+                'title' => $title,
+                'handle' => Str::slug($title),
+                'url' => '/',
+                'count' => $count,
+            ]);
+    }
+
     protected function applyQueryScopes(Builder $query)
     {
-        $limitToPublished = ! $this->config('count_unpublished', true);
-        if ($limitToPublished) {
+        $ignoreUnpublished = $this->config('ignore_unpublished', false);
+        if ($ignoreUnpublished) {
             $query->whereIn('status', ['published', null]);
         }
 
@@ -99,7 +125,7 @@ class CollectionCount extends Widget
 
     protected function getViewUrl(Collection|Taxonomy $collection)
     {
-        return User::current()->can('view', $collection->handle())
+        return User::current()->can('view', $collection)
             ? $collection->showUrl()
             : null;
     }

@@ -1,7 +1,7 @@
 # Statamic Widget: Collection Count
 
 Control panel widget for [Statamic](https://statamic.com/) that displays the
-count of entries for a given collection or taxonomy.
+count of collection entries or taxonomy terms.
 
 ![Collection Count Widget Screenshot](./art/collection-count-widget.png)
 
@@ -18,14 +18,14 @@ Alternatively, you can install the addon via the control panel.
 ## Usage
 
 Add the widget to your control panel dashboard by adding it to the `widgets` array in the
-`config/statamic/cp.php` config file. Pass in the name of the collection to show.
+`config/statamic/cp.php` config file. Pass in the names of collections to show.
 
 ```php
 return [
     'widgets' => [
         [
             'type' => 'collection_count',
-            'collection' => 'projects'
+            'collections' => ['articles', 'categories', 'authors'],
         ]
     ]
 ];
@@ -33,18 +33,36 @@ return [
 
 ## Options
 
-### Ignore draft entries
+### Display as individual cards
 
-By default, all entries are counted, including drafts. Set the `count_unpublished` variable to
-`false` to only count published entries.
+The widget displays counts in text sections with dividers between them. This works well if the widget
+is used first in the dashboard. If you prefer a design that integrates more into the card layout
+of other widgets, you can enable the `cards` config. This will render each count in a separate card.
 
-```php
+```diff
 return [
     'widgets' => [
         [
             'type' => 'collection_count',
-            'collection' => 'projects',
-            'count_unpublished' => false,
+            'collections' => ['articles', 'categories', 'authors'],
++           'cards' => true,
+        ]
+    ]
+];
+```
+
+### Ignore draft entries
+
+By default, all entries are counted, including drafts. Set the `ignore_unpublished` config value to
+only count published entries.
+
+```diff
+return [
+    'widgets' => [
+        [
+            'type' => 'collection_count',
+            'collections' => ['articles', 'categories', 'authors'],
++           'ignore_unpublished' => true,
         ]
     ]
 ];
@@ -54,13 +72,13 @@ return [
 
 Pass in the `query_scope` param to apply [custom scopes](https://statamic.dev/extending/query-scopes-and-filters) before counting.
 
-```php
+```diff
 return [
     'widgets' => [
         [
             'type' => 'collection_count',
-            'collection' => 'projects',
-            'query_scope' => 'archived',
+            'collections' => ['articles', 'categories', 'authors'],
++           'query_scope' => 'unarchived',
         ]
     ]
 ];
@@ -68,14 +86,14 @@ return [
 
 ### Usage with taxonomies
 
-The widget will happily count taxonomy terms as well. Just use the taxonomy name instead.
+The widget can count taxonomy terms as well. Just use the taxonomy name instead.
 
 ```php
 return [
     'widgets' => [
         [
             'type' => 'collection_count',
-            'collection' => 'tags',
+            'collections' => ['tags'],
         ]
     ]
 ];
@@ -83,7 +101,7 @@ return [
 
 ## Requirements
 
-Statamic 3/4/5+
+Statamic 6 or higher. For Statamic 5 support, please use version 1.x of this addon.
 
 ## License
 

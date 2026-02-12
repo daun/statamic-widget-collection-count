@@ -1,1 +1,4 @@
-@tailwind utilities;
+@import '@statamic/cms/tailwind.css';
+
+@source '../**/*.vue';
+@source '../**/*.blade.php';
