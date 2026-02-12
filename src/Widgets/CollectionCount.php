@@ -29,7 +29,7 @@ class CollectionCount extends Widget
             'collections' => $collections,
             'errors' => $errors,
             'grid' => ! $this->config('width'),
-            'card' => $this->config('card', true),
+            'cards' => $this->config('cards', false),
         ]);
     }
 
