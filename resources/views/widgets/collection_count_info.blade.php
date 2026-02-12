@@ -7,7 +7,7 @@
             <span class="opacity-0 group-hover:opacity-100 group-hover:text-ui-accent-text">→</span>
         @endif
     </p>
-    <div class="mt-1! -ml-0.5! lining-nums font-medium">
+    <div class="mt-1! -ml-0.5! lining-nums">
         <p>
             <span class="group-hover:text-ui-accent-text">{{ $collection->count }}</span>
         </p>
