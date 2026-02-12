@@ -50,7 +50,7 @@ class CollectionCount extends Widget
 
         $result = $collections
             ->map(fn($handle) => $this->findCollectionOrTaxonomy($handle))
-            ->filter()
+            ->filter(fn($collection) => $collection && $this->collectionOrTaxonomyShouldBeVisible($collection))
             ->map(fn($collection) => $this->queryCollectionOrTaxonomy($collection));
 
         return [$result, $errors];
@@ -71,6 +71,11 @@ class CollectionCount extends Widget
     protected function collectionOrTaxonomyExists(string $handle): bool
     {
         return (bool) $this->findCollectionOrTaxonomy($handle);
+    }
+
+    protected function collectionOrTaxonomyShouldBeVisible(Collection|Taxonomy $collection): bool
+    {
+        return User::current()->can('view', $collection);
     }
 
     protected function queryCollectionOrTaxonomy(Collection|Taxonomy $collection): ?object
