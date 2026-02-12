@@ -2,27 +2,3 @@
 
 @source '../**/*.vue';
 @source '../**/*.blade.php';
-
-:root {
-  --collection-count-col: 1.5em;
-}
-
-[data-max-count='1'] {
-  --collection-count-col: 1.5em;
-}
-
-[data-max-count='2'] {
-  --collection-count-col: 1.75em;
-}
-
-[data-max-count='3'] {
-  --collection-count-col: 2.25em;
-}
-
-[data-max-count='4'] {
-  --collection-count-col: 2.75em;
-}
-
-[data-max-count='5'] {
-  --collection-count-col: 3.5em;
-}
