@@ -35,16 +35,16 @@ return [
 
 ### Ignore draft entries
 
-By default, all entries are counted, including drafts. Set the `count_unpublished` variable to
-`false` to only count published entries.
+By default, all entries are counted, including drafts. Set the `ignore_unpublished` config value to
+only count published entries.
 
-```php
+```diff
 return [
     'widgets' => [
         [
             'type' => 'collection_count',
-            'collection' => 'projects',
-            'count_unpublished' => false,
+            'collections' => ['articles', 'categories', 'authors'],
++           'ignore_unpublished' => true,
         ]
     ]
 ];

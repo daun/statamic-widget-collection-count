@@ -110,8 +110,8 @@ class CollectionCount extends Widget
 
     protected function applyQueryScopes(Builder $query)
     {
-        $limitToPublished = ! $this->config('count_unpublished', true);
-        if ($limitToPublished) {
+        $ignoreUnpublished = $this->config('ignore_unpublished', false);
+        if ($ignoreUnpublished) {
             $query->whereIn('status', ['published', null]);
         }
 
