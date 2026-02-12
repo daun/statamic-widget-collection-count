@@ -27,7 +27,7 @@ class CollectionCount extends Widget
             collect(Arr::wrap($this->config('collections', $this->config('collection', []))))
         );
 
-        return view('daun::widgets.collection_count', [
+        return view('daun::widgets.collection_count_widget', [
             'collections' => $collections,
             'errors' => $errors,
             'grid' => ! $this->config('width') || $collections->count() > 1,

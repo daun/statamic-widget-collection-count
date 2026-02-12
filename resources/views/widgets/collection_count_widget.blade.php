@@ -9,15 +9,7 @@
 @endif
 
     @foreach ($collections as $collection)
-        @if ($card)
-            <ui-card inset>
-                <div class="px-4! sm:px-4.5! py-5!">
-                    @include('daun::widgets.collection_count_item', ['collection' => $collection])
-                </div>
-            </ui-card>
-        @else
-            @include('daun::widgets.collection_count_item', ['collection' => $collection])
-        @endif
+        @include('daun::widgets.collection_count_item', ['collection' => $collection, 'card' => $card])
     @endforeach
 
 @if ($grid)

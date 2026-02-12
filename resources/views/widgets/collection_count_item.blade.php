@@ -1,20 +1,11 @@
-@php use function Statamic\trans as __; @endphp
-
-<div class="group relative -mt-1.5! -mb-1! text-5xl hover:opacity-70">
-    <p class="text-base truncate flex gap-2 items-baseline">
-        <span>{{ __($collection->title) }}</span>
-        @if ($collection->url)
-            <span class="opacity-0 group-hover:opacity-100">→</span>
-        @endif
-    </p>
-    <div class="mt-1! -ml-0.5! lining-nums font-medium">
-        <p>
-            <span>{{ $collection->count }}</span>
-        </p>
+@if ($card)
+    <ui-card inset>
+        <div class="relative px-4! sm:px-4.5! py-5!">
+            @include('daun::widgets.collection_count_info', ['collection' => $collection])
+        </div>
+    </ui-card>
+@else
+    <div class="relative">
+        @include('daun::widgets.collection_count_info', ['collection' => $collection])
     </div>
-    @if ($collection->url)
-        <a href="{{ $collection->url }}" class="absolute opacity-0 inset-0 select-none">
-            {{ __($collection->title) }}
-        </a>
-    @endif
-</div>
+@endif
