@@ -33,6 +33,24 @@ return [
 
 ## Options
 
+### Display as individual cards
+
+The widget displays counts in text sections with dividers between them. This works well if the widget
+is used first in the dashboard. If you prefer a design that integrates more into the card layout
+of other widgets, you can enable the `cards` config. This will render each count in a separate card.
+
+```diff
+return [
+    'widgets' => [
+        [
+            'type' => 'collection_count',
+            'collections' => ['articles', 'categories', 'authors'],
++           'cards' => true,
+        ]
+    ]
+];
+```
+
 ### Ignore draft entries
 
 By default, all entries are counted, including drafts. Set the `ignore_unpublished` config value to
